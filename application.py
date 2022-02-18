@@ -30,19 +30,19 @@ def feedback():
 #classify waste
 @application.route('/')
 @application.route('/classify.html')
-def WASTECLASSIFY():
+def WASTEcLASSIFY():
     return render_template("classify.html")
 
 #classify waste
-@application.route("/WASTECLASSIFY", methods = ["POST"])
-def WASTECLASSIFY():
+@application.route("/WASTEcLASSIFY", methods = ["POST"])
+def WASTEcLASSIFY():
     image_data = request.files["file"]
     #save the image to upload
     basepath = os.path.dirname(__file__)
     image_path = os.path.join(basepath, "uploads", secure_filename(image_data.filename))
     image_data.save(image_path)
 
-    predicted_value, details, video1, video2 = util.WASTE_CLASSIFY(image_path)
+    predicted_value, details, video1, video2 = util.WASTE_cLASSIFY(image_path)
     os.remove(image_path)
     return jsonify(predicted_value=predicted_value, details=details, video1=video1, video2=video2)
 
