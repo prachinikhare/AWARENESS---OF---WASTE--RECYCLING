@@ -20,7 +20,7 @@
  <!--favicon link-->
  <link rel="shortcut icon" href="{{ url_for("static",filename="images/logo.png") }}" type="image/x-icon" />
  <!-- this is use for use url_for() from javascript -->
-<script src="/jsglue.js" type="text/javascript"></script>
+<script src="{{ url_for(filename="/jsglue.js") }}" type="text/javascript"></script>
 </head>
 <body>
   <!--navigation bar-->
