@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, jsonify, url_for
+from flask import Flask, request, render_template, redirect, jsonify
 from flask_jsglue import JSGlue # this is use for url_for() working inside javascript which is help us to navigate the url
 import util
 import os
