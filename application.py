@@ -30,7 +30,7 @@ def feedback():
 #classify waste
 @application.route('/')
 @application.route('/classify.html')
-def classify():
+def WASTE_CLASSIFY():
     return render_template("classify.html")
 
 #classify waste
