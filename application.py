@@ -34,15 +34,15 @@ def classify():
     return render_template("classify.html")
 
 #classify waste
-@application.route("/WASTE_CLASSIFY (1)", methods = ["POST"])
-def WASTE_CLASSIFY (1)():
+@application.route("/WASTE_CLASSIFY", methods = ["POST"])
+def WASTE_CLASSIFY():
     image_data = request.files["file"]
     #save the image to upload
     basepath = os.path.dirname(__file__)
     image_path = os.path.join(basepath, "uploads", secure_filename(image_data.filename))
     image_data.save(image_path)
 
-    predicted_value, details, video1, video2 = util.WASTE_CLASSIFY (1)(image_path)
+    predicted_value, details, video1, video2 = util.WASTE_CLASSIFY(image_path)
     os.remove(image_path)
     return jsonify(predicted_value=predicted_value, details=details, video1=video1, video2=video2)
 
