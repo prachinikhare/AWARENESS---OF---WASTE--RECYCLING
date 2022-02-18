@@ -46,6 +46,11 @@ def classifywaste():
     os.remove(image_path)
     return jsonify(predicted_value=predicted_value, details=details, video1=video1, video2=video2)
 
+# here is route of 404 means page not found error
+@application.errorhandler(404)
+def page_not_found(e):
+    # here i created my own 404 page which will be redirect when 404 error occured in this web app
+    return render_template("404.html"), 404
 
 if __name__ == '__main__':
     application.debug = True
