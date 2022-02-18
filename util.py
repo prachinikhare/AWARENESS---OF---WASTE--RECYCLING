@@ -36,9 +36,9 @@ data = {
 
 def load_artifacts():
     global model
-    model = tf.keras.models.load_model("WASTE_CLASSIFY (1).h5")
+    model = tf.keras.models.load_model("WASTECLASSIFY.h5")
 
-def WASTECLASSIFY(image_path):
+def WASTE_CLASSIFY(image_path):
 	global model, output_class
 	test_image = tf.keras.preprocessing.image.load_img(image_path, target_size=(150, 150))
 	test_image = tf.keras.preprocessing.image.img_to_array(test_image) / 255
