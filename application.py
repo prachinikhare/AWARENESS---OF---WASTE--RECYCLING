@@ -28,12 +28,6 @@ def feedback():
     return render_template("feedback.html")
 
 #classify waste
-@application.route('/')
-@application.route('/classify.html')
-def classifywaste():
-    return render_template("classify.html")
-
-#classify waste
 @application.route("/classifywaste", methods = ["POST"])
 def classifywaste():
     image_data = request.files["file"]
