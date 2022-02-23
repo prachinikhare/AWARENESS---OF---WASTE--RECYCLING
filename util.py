@@ -40,7 +40,7 @@ def load_artifacts():
 
 def classify_waste(image_path):
 	global model, output_class
-	test_image = tf.keras.preprocessing.image.load_img(image_path, target_size=(150, 150))
+	test_image = tf.keras.preprocessing.image.load_img(image_path, target_size=(224, 224))
 	test_image = tf.keras.preprocessing.image.img_to_array(test_image) / 255
 	test_image = np.expand_dims(test_image, axis = 0)
 	predicted_array = model.predict(test_image)
