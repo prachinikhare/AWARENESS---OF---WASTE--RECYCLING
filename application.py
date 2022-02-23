@@ -17,6 +17,9 @@ class FEEDBACKPAGE(db.Model):
     email = db.Column(db.Varchar(500), nullable=False)
     message = db.Column(db.String(500), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self) -> str:
+        return f"{self.sno} - {self.name}"
 
 # JSGlue is use for url_for() working inside javascript which is help us to navigate the url
 jsglue = JSGlue() # create a object of JsGlue
