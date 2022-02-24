@@ -20,6 +20,7 @@ class FEEDBACKPAGE(db.Model):
     
     def __repr__(self) -> str:
         return f"{self.sno} - {self.name}"
+    
 
 # JSGlue is use for url_for() working inside javascript which is help us to navigate the url
 jsglue = JSGlue() # create a object of JsGlue
@@ -37,30 +38,53 @@ def home():
 def about():
     return render_template("about.html")
 
-@application.route("/")
-def index():
-    feedbacksection = FEEDBACKPAGE.query.order_by(FEEDBACKPAGE.date_created.desc()).all()
-    return render_template('about.html', feedbacksection=feedbacksection)
+@application.route('/', methods=['GET', 'POST'])
+def feedback():
+    if request.method=='POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        Feedback = FEEDBACKPAGE(name= name,email=email, message=message )
+        db.session.add(Feedback)
+        db.session.commit()
+        
+    FEEDBACKPAGEsection = FEEDBACKPAGE.query.all() 
+    return render_template('feedback.html',  FEEDBACKPAGEsection=FEEDBACKPAGEsection)
 
-@application.route('/feedbacks/<int:feedbacks_id>')
-def feedbacks(feedbacks_id):
-    feedbacks = FEEDBACK.query.filter_by(id=feedbacks_id).one()
-    return render_template('feedback.html', feedbacks=feedbacks)
+@application.route('/show')
+def products():
+    FEEDBACKPAGEsection = FEEDBACKPAGE.query.all()
+    print(FEEDBACKPAGEsection)
+    return 'this is products page'
+
+@application.route('/update/<int:sno>', methods=['GET', 'POST'])
+def update(sno):
+    if request.method=='POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        Feedback = FEEDBACKPAGE.query.filter_by(sno=sno).first()
+        Feedback.name = name
+        Feedback.email = email
+        Feedback. message =  message
+        db.session.add(Feedback)
+        db.session.commit()
+        return redirect("/")
+        
+     Feedback = FEEDBACKPAGE.query.filter_by(sno=sno).first()
+    return render_template('update.html', Feedback=Feedback)
+
+@application.route('/delete/<int:sno>')
+def delete(sno):
+    Feedback = FEEDBACKPAGE.query.filter_by(sno=sno).first()
+    db.session.delete(Feedback)
+    db.session.commit()
+    return redirect("/")
 
 @application.route('/feedback')
 @application.route("/feedback.html")
 def feedback():
     return render_template("feedback.html")
-
-@application.route('/Feedback', methods=['POST'])
-def Feedback():
-    name = request.form['name']
-    email = request.form['email']
-    message  = request.form['message']
-    feedbacksection = FEEDBACK(name=name, email=email, message = message, date_created=datetime.now())
-    db.session.feedback(feedbacksection)
-    db.session.commit()
-    return redirect(url_for('about'))
 
 #classify waste
 @application.route('/')
