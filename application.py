@@ -11,10 +11,10 @@ application.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///feedback.db"
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(application)
 
-class FEEDBACKPAGE(db.Model):
+class Feedbackpage(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.Varchar(500), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
     message = db.Column(db.String(500), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     
@@ -36,13 +36,13 @@ def about():
 
 @application.route('/')
 def about():
-    feedback = FEEDBACKPAGE.query.order_by(FEEDBACKPAGE.date_created.desc()).all()
+    feedback = Feedbackpage.query.order_by(Feedbackpage.date_created.desc()).all()
  
     return render_template('about.html', feedback=feedback)
  
 @application.route('/feedback/<int:feedback_id>')
 def feedback(feedback_id):
-    feedback = FEEDBACKPAGE.query.filter_by(id=feedback_id).one()
+    feedback = Feedbackpage.query.filter_by(id=feedback_id).one()
     return render_template('feedback.html', feedback=feedback)
 
 @application.route('/FEEDBACK', methods=['POST'])
@@ -51,7 +51,7 @@ def FEEDBACK():
     email = request.form['email']
     message = request.form['message']
  
-    feedback = FEEDBACKPAGE(name= name,email=email, message=message, date_created=datetime.now())
+    feedback = Feedbackpage(name= name,email=email, message=message, date_created=datetime.now())
  
     db.session.add(feedback)
     db.session.commit()
