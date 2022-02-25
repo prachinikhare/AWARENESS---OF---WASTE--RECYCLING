@@ -46,7 +46,7 @@ def feedback():
         message = request.form['message']
         Feedback = FEEDBACKPAGE(name= name,email=email, message=message )
         db.session.add(Feedback)
-        db.session.commit()
+        db.session.commit() 
         
     FEEDBACKPAGEsection = FEEDBACKPAGE.query.all() 
     return render_template('feedback.html',  FEEDBACKPAGEsection=FEEDBACKPAGEsection)
@@ -72,7 +72,7 @@ def update(sno):
         return redirect("/")
         
      Feedback = FEEDBACKPAGE.query.filter_by(sno=sno).first()
-    return render_template('update.html', Feedback=Feedback)
+     return render_template('update.html', Feedback=Feedback)
 
 @application.route('/delete/<int:sno>')
 def delete(sno):
