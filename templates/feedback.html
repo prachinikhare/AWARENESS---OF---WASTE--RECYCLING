@@ -29,7 +29,7 @@
   </header>
 
   <div class="l">
-    <h1 class="text-light" style="font-size: 40px;"><strong>FEED-BACK</strong></h1><br>
+    <h1 class="text-light" style="font-size: 40px;"><strong>FEEDBACK</strong></h1><br>
     <p style="font-size: 25px; color: #fff;">Your Feedback valuable for us
     </p>
   </div>
@@ -65,12 +65,8 @@
         {% for feedback in feedbacks %}
             <div class="feedback-preview">
             <a href="{{ url_for('feedback', feedback_id=feedback.id) }}">
-              <h2 class="feedback-title">
-                {{ feedback.name }}
-              </h2>
-              <h3 class="feedback-subtitle">
-                {{ feedback.email }}
-              </h3>
+              <h2 class="feedback-name">{{ feedback.name }}</h2>
+              <h3 class="feedback-email">{{ feedback.email }}</h3>
             </a>
             <p class="feedback-meta">Created by {{ feedback.message }} on {{ feedback.date_created.strftime('%B %d, %Y') }}</p>
           </div>
