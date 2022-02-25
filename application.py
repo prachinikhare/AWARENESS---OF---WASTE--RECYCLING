@@ -31,7 +31,7 @@ def home():
 
 @application.route('/about')
 @application.route("/about.html")
-def about():
+def About():
     return render_template("about.html")
 
 @application.route('/')
@@ -57,11 +57,6 @@ def FEEDBACK():
     db.session.commit()
  
     return redirect(url_for('about'))
-
-@application.route('/feedback')
-@application.route("/feedback.html")
-def feedback():
-    return render_template("feedback.html")
 
 #classify waste
 @application.route('/')
