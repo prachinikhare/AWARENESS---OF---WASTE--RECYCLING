@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for("static",filename="css/404.css") }}" />
  <!--favicon link-->
  <link rel="shortcut icon" href="{{ url_for("static",filename="images/logo.png") }}" type="image/x-icon">
+  {{ JSGlue.include() }} <!-- this is use for use url_for() from javascript -->
 </head>
 <body>
     <div id="clouds">
@@ -25,7 +26,7 @@
         <div class='_1'>THE PAGE</div>
         <div class='_2'>WAS NOT FOUND</div>
         <h4>The Dish you're looking for is not  here you can try <a href = "/" style="color: green;"><u>this page</u></a> instead</h4>
-        <a class='btn' href='./index.html'>BACK TO HOME</a>
+        <a class='btn' href="{{ url_for("templates",filename="index.html") }}" >BACK TO HOME</a>
     </div>
 </body>
 </html>
