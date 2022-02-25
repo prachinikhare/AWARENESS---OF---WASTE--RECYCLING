@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url_for("static",filename="css/about.css") }}" />
     <!--favicon link-->
     <link rel="shortcut icon" href="{{ url_for("static",filename="images/logo.png") }}" type="image/x-icon" />
+    {{ JSGlue.include() }} <!-- this is use for use url_for() from javascript -->
 </head>
 
 <body>
@@ -72,7 +73,7 @@
                         </div>
 
                         <div class="btn-box">
-                            <a href="./classify.html" class="theme-btn btn-style-one">Classify</a>
+                            <a href="{{ url_for("templates",filename="classify.htm") }}" class="theme-btn btn-style-one">Classify</a>
                         </div>
                     </div>
                 </div>
