@@ -38,7 +38,7 @@ def About():
 def about():
     feedback = Feedbackpage.query.order_by(Feedbackpage.date_created.desc()).all()
  
-    return render_template('about.html', feedback=feedback)
+    return render_template('feedback.html', feedback=feedback)
  
 @application.route('/feedback/<int:feedback_id>')
 def feedback(feedback_id):
