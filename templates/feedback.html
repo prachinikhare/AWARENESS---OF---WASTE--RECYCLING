@@ -59,8 +59,26 @@
             <input type="submit" value="Submit">
           </div>
         </form>
+      </div class="container">
+      <div class="content">
+        {% for feedback in feedbacks %}
+          <div class="feedback-preview">
+            <a href="{{ url_for('feedback', feedback_id=feedback.id) }}">
+              <h2 class="feedback-name">
+                {{ feedback.name }}
+              </h2>
+              <h3 class="feedback-email">
+                {{ feedback.email }}
+              </h3>
+            </a>
+            <p class="feedback-meta">Created by {{ feedback.message }} on {{ feedback.date_created.strftime('%B %d, %Y') }}</p>
+          </div>
+          {% endfor %}
+          <hr>
+        </div>
       </div>
-    <div>                       
+    </div> 
+    <hr>                      
   </section>
   <!-- footer section -->
   <footer id="footer">
