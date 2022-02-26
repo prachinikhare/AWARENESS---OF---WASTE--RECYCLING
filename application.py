@@ -58,10 +58,10 @@ def FEEDBACK():
  
     return redirect(url_for('feedbackid'))
 
-#@application.route('/feedback', methods=["GET","POST"])
-#@application.route("/feedback.html")
-#def About():
-    #return render_template("feedback.html")
+@application.route('/')
+@application.route("/feedback.html")
+def feed():
+     return render_template("feedback.html")
 
 #classify waste
 @application.route('/')
