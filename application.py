@@ -1,9 +1,6 @@
-from flask import Flask, request, render_template, redirect, jsonify, url_for,abort,session
+from flask import Flask, request, render_template, redirect, jsonify, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 import sqlalchemy
-import flask_mail import Mail,Message
 from datetime import datetime
 from flask_jsglue import JSGlue # this is use for url_for() working inside javascript which is help us to navigate the url
 import util
@@ -13,13 +10,7 @@ from werkzeug.utils import secure_filename
 application = Flask(__name__ , template_folder='templates',instance_relative_config=True, static_url_path = "/static", static_folder = "static")
 application.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///feedback.db"
 application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-application.config['MAIL_SERVER'] = "smtp-mail.outlook.com"
-application.config['MAIL_PORT'] = 587
-application.config['MAIL_USE_TLS'] = True
-application.config['MAIL_USE_SSL'] = False
-mail=Mail(application)
 db = SQLAlchemy(application)
-admin = Admin(application)
 
 class Feedbackpage(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
@@ -43,12 +34,11 @@ def home():
 @application.route("/about.html")
 def About():
     return render_template("about.html")
-
-@application.route('/')
-def about():
-    feedback = Feedbackpage.query.order_by(Feedbackpage.date_created.desc()).all()
  
-    return render_template('feedback.html', feedback=feedback)
+@application.route('/')
+def feedbackid():
+    feedbacks = Feedbackpage.query.order_by(Feedbackpage.date_created.desc()).all()
+    return render_template('feedback.html', feedbacks=feedbacks)
  
 @application.route('/feedback/<int:feedback_id>')
 def feedback(feedback_id):
@@ -66,12 +56,12 @@ def FEEDBACK():
     db.session.add(feedback)
     db.session.commit()
  
-    return redirect(url_for('about'))
+    return redirect(url_for('feedbackid'))
 
-@application.route('/feedback', methods=["GET","POST"])
-@application.route("/feedback.html")
-def About():
-    return render_template("feedback.html")
+#@application.route('/feedback', methods=["GET","POST"])
+#@application.route("/feedback.html")
+#def About():
+    #return render_template("feedback.html")
 
 #classify waste
 @application.route('/')
