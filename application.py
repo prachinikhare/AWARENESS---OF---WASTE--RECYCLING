@@ -19,11 +19,15 @@ class Feedbackpage(db.Model):
     message = db.Column(db.String(500), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     
+    def __repr__(self) -> str:
+        return f"{self.sno} - {self.name}"
+    
+    
 # JSGlue is use for url_for() working inside javascript which is help us to navigate the url
 jsglue = JSGlue() # create a object of JsGlue
 jsglue.init_app(application) # and assign the app as a init app to the instance of JsGlue
-
 util.load_artifacts()
+
 #home page
 @application.route('/')
 @application.route('/index.html')
@@ -34,35 +38,31 @@ def home():
 @application.route("/about.html")
 def About():
     return render_template("about.html")
- 
-@application.route('/')
-def feedbackid():
-    feedbacks = Feedbackpage.query.order_by(Feedbackpage.date_created.desc()).all()
-    return render_template('feedback.html', feedbacks=feedbacks)
- 
-@application.route('/feedback/<int:feedback_id>')
-def feedback(feedback_id):
-    feedback = Feedbackpage.query.filter_by(id=feedback_id).one()
-    return render_template('feedback.html', feedback=feedback)
-
-@application.route('/FEEDBACK', methods=['POST'])
-def FEEDBACK():
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
- 
-    feedback = Feedbackpage(name= name,email=email, message=message, date_created=datetime.now())
- 
-    db.session.add(feedback)
-    db.session.commit()
- 
-    return redirect(url_for('feedbackid'))
 
 @application.route('/')
 @application.route("/feedback.html")
 def feed():
      return render_template("feedback.html")
 
+@application.route('/', methods=['GET', 'POST'])
+def FEEDBACK():
+    if request.method=='POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        feedback = Feedbackpage(name= name,email=email, message=message, date_created=datetime.now())
+        db.session.add(feedback)
+        db.session.commit()   
+    allFeedbacks = Feedbackpage.query.all() 
+    return render_template('feedback.html', allFeedbacks=allFeedbacks)
+
+@application.route('/show')
+def products():
+    allFeedbacks = Feedbackpage.query.all()
+    print(allFeedbacks)
+    return 'this is feedback page'    
+    
+    
 #classify waste
 @application.route('/')
 @application.route('/classify.html')
