@@ -61,7 +61,28 @@
           </div>
         </form>
       </div>
-      <tbody>
+      <div class="container">
+        <h2>Your feedbacks</h2>
+        
+                {% if allFeedbacks|length == 0 %}
+                   
+                <div class="alert alert-dark" role="alert">
+                    No Feedbacks found. Add your first Feedbacks now!
+                  </div>
+                    {% else %} 
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">SNo</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Actions</th>
+                          </tr>
+                        </thead>
+                        
+                        <tbody>
         {% for feedback  in allFeedbacks %}
         <tr>
            <th scope="row">{{loop.index}}</th>
@@ -70,6 +91,10 @@
            <td>{{feedback.message}}</td>
            <td>{{feedback.date_created}}</td> 
         </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+        {% endif %}
       </tbody>      
     </div>  
   </section>
