@@ -66,11 +66,11 @@
         <div class="image-box">
         {% for feedback in feedbacks %}
           <div class="feedback-preview">
-            <a href="{{ url_for('post', feedback_id=feedback.id) }}">
-              <h2 class="feedack-name">
-                {{ feedack.name }}
+            <a href="{{ url_for('feedback', feedback_id=feedback.id) }}">
+              <h2 class="feedback-name">
+                {{ feedback.name }}
               </h2>
-              <h3 class="feedack-email">
+              <h3 class="feedback-email">
                 {{ feedback.email }}
               </h3>
             </a>
