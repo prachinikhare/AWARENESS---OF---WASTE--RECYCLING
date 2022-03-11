@@ -41,7 +41,7 @@
         <div class="image-box">
           <img src="{{ url_for("static",filename="images/Contact us-rafiki.png") }}" alt="" />
         </div>
-        <form action="/" methods="POST">
+        <form action="/feedbacks" methods="post">
           <div class="topic">FEEDBACK</div>
           <div class="input-box">
             <input type="text" name="name" required>
@@ -60,29 +60,9 @@
           </div>
         </form>
       </div>
-   </section>
-      <div class="container">
-      <div class="content">
-        <div class="image-box">
-        {% for feedback in feedbacks %}
-          <div class="feedback-preview">
-            <a href="{{ url_for('feedback', feedback_id=feedback.id) }}">
-              <h2 class="feedback-name">
-                {{ feedback.name }}
-              </h2>
-              <h3 class="feedback-email">
-                {{ feedback.email }}
-              </h3>
-            </a>
-            <p class="feedback-meta">Posted by {{ feedback.message }} on {{ feedback.date_posted.strftime('%B %d, %Y') }}</p>
-          </div>
-          {% endfor %}
-          <hr>
-        </div>
+      <div>
       </div>
-    </div>
- 
-    <hr>        
+   </section>     
   <!-- footer section -->
   <footer id="footer">
     <p>&copy Copyright 2022, All Rights Reserved.</p>
