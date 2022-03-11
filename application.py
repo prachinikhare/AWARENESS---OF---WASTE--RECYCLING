@@ -13,10 +13,10 @@ db = SQLAlchemy(application)
 
 class Feedbackpage(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200))
-    email = db.Column(db.String(120))
-    message = db.Column(db.String(500))
-    date_posted = db.Column(db.DateTime)
+    name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    message = db.Column(db.String(500), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=True)
     
 # JSGlue is use for url_for() working inside javascript which is help us to navigate the url
 jsglue = JSGlue() # create a object of JsGlue
@@ -39,29 +39,17 @@ def About():
 def feed():
      return render_template("feedback.html")
 
-@application.route('/')
-def index():
-    feedbacks = Feedbackpage.query.order_by(Feedbackpage.date_posted.desc()).all()
- 
-    return render_template('feedback.html',feedbacks=feedbacks)
- 
-@application.route('/feedback/<int:feedback_id>')
-def feedback(feedback_id):
-    feedback = Feedbackpage.query.filter_by(id=feedback_id).one()
- 
-    return render_template('feedback.html', feedback=feedback)
-
-@application.route('/addfeedbacks', methods=['POST'])
-def addfeedbacks():
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
-    feedback = Feedbackpage(name= name, email=email, message=message, date_posted=datetime.now())
+@application.route('/feedbacks', methods = ['GET', 'POST'])
+def feedbacks():
+  if(request.method=='POST'):
+    name = request.form.get('name')
+    email = request.form.get('email')
+    message = request.form.get('message')
+    feedback = Feedbackpage(name= name, email=email, message=message,date_posted=datetime.now())
     db.session.add(feedback)
     db.session.commit()
- 
-    return redirect(url_for('index'))
-   
+    return render_template('feedback.html')
+
 #classify waste
 @application.route('/')
 @application.route('/classify.html')
