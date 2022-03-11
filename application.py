@@ -9,19 +9,14 @@ from werkzeug.utils import secure_filename
 
 application = Flask(__name__ , template_folder='templates',instance_relative_config=True, static_url_path = "/static", static_folder = "static")
 application.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///feedback.db"
-application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(application)
 
 class Feedbackpage(db.Model):
     sno = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    message = db.Column(db.String(500), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    def __repr__(self) -> str:
-        return f"{self.sno} - {self.name}"
-    
+    name = db.Column(db.String(200))
+    email = db.Column(db.String(120))
+    message = db.Column(db.String(500))
+    date_posted = db.Column(db.DateTime)
     
 # JSGlue is use for url_for() working inside javascript which is help us to navigate the url
 jsglue = JSGlue() # create a object of JsGlue
@@ -44,25 +39,29 @@ def About():
 def feed():
      return render_template("feedback.html")
 
-@application.route('/', methods=['GET', 'POST'])
-def FEEDBACK():
-    if request.method=='POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-        feedback = Feedbackpage(name= name,email=email, message=message, date_created=datetime.now())
-        db.session.add(feedback)
-        db.session.commit()   
-    allFeedbacks = Feedbackpage.query.all() 
-    return render_template('feedback.html', allFeedbacks=allFeedbacks)
+@application.route('/')
+def index():
+    feedbacks = Feedbackpage.query.order_by(Feedbackpage.date_posted.desc()).all()
+ 
+    return render_template('feedback.html',feedbacks=feedbacks)
+ 
+@application.route('/feedback/<int:feedback_id>')
+def feedback(feedback_id):
+    feedback = Feedbackpage.query.filter_by(id=feedback_id).one()
+ 
+    return render_template('feedback.html', feedback=feedback)
 
-@application.route('/show')
-def products():
-    allFeedbacks = Feedbackpage.query.all()
-    print(allFeedbacks)
-    return 'this is feedback page'    
-    
-    
+@app.route('/addfeedbacks', methods=['POST'])
+def addfeedbacks():
+    name = request.form['name']
+    email = request.form['email']
+    message = request.form['message']
+    feedback = Feedbackpage(name= name, email=email, message=message, date_posted=datetime.now())
+    db.session.add(feedback)
+    db.session.commit()
+ 
+    return redirect(url_for('index'))
+   
 #classify waste
 @application.route('/')
 @application.route('/classify.html')
@@ -91,3 +90,4 @@ def page_not_found(e):
 if __name__ == '__main__':
     application.debug = True
     application.run()
+</int:feedback_id>
