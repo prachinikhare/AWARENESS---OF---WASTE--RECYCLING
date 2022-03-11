@@ -51,7 +51,7 @@ def feedback(feedback_id):
  
     return render_template('feedback.html', feedback=feedback)
 
-@app.route('/addfeedbacks', methods=['POST'])
+@application.route('/addfeedbacks', methods=['POST'])
 def addfeedbacks():
     name = request.form['name']
     email = request.form['email']
