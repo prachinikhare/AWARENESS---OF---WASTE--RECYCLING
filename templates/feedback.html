@@ -60,43 +60,29 @@
           </div>
         </form>
       </div>
+   </section>
       <div class="container">
-        <h2>Your feedbacks</h2>
-        
-                {% if allFeedbacks|length == 0 %}
-                   
-                <div class="alert alert-dark" role="alert">
-                    No Feedbacks found. Add your first Feedbacks now!
-                  </div>
-                    {% else %} 
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">SNo</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Actions</th>
-                          </tr>
-                        </thead>
-                        
-                        <tbody>
-        {% for feedback  in allFeedbacks %}
-        <tr>
-           <th scope="row">{{loop.index}}</th>
-           <td>{{feedback.name}}</td>
-           <td>{{feedback.email}}</td>
-           <td>{{feedback.message}}</td>
-           <td>{{feedback.date_created}}</td> 
-        </tr>
-        {% endfor %}
-      </tbody>
-      </table>
-        {% endif %}
-      </tbody>      
-    </div>  
-  </section>
+      <div class="content">
+        <div class="image-box">
+        {% for feedback in feedbacks %}
+          <div class="feedback-preview">
+            <a href="{{ url_for('post', feedback_id=feedback.id) }}">
+              <h2 class="feedack-name">
+                {{ feedack.name }}
+              </h2>
+              <h3 class="feedack-email">
+                {{ feedback.email }}
+              </h3>
+            </a>
+            <p class="feedback-meta">Posted by {{ feedback.message }} on {{ feedback.date_posted.strftime('%B %d, %Y') }}</p>
+          </div>
+          {% endfor %}
+          <hr>
+        </div>
+      </div>
+    </div>
+ 
+    <hr>        
   <!-- footer section -->
   <footer id="footer">
     <p>&copy Copyright 2022, All Rights Reserved.</p>
