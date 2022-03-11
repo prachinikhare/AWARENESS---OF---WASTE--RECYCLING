@@ -8,7 +8,7 @@ import os
 from werkzeug.utils import secure_filename
 
 application = Flask(__name__ , template_folder='templates',instance_relative_config=True, static_url_path = "/static", static_folder = "static")
-application.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////feedback.db"
+application.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///feedback.db"
 db = SQLAlchemy(application)
 
 class Feedbackpage(db.Model):
