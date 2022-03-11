@@ -34,6 +34,10 @@ def home():
 def About():
     return render_template("about.html")
 
+@application.route('/')
+@application.route("/feedback.html")
+def feed():
+     return render_template("feedback.html")
 
 @application.route('/feedback', methods = ['GET', 'POST'])
 def feedback():
