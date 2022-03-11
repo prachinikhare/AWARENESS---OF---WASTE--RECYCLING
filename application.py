@@ -34,19 +34,15 @@ def home():
 def About():
     return render_template("about.html")
 
-@application.route('/')
-@application.route("/feedback.html")
-def feed():
-     return render_template("feedback.html")
 
-@application.route('/feedbacks', methods = ['GET', 'POST'])
-def feedbacks():
+@application.route('/feedback', methods = ['GET', 'POST'])
+def feedback():
   if(request.method=='POST'):
     name = request.form.get('name')
     email = request.form.get('email')
     message = request.form.get('message')
-    feedback = Feedbackpage(name= name, email=email, message=message,date_posted=datetime.now())
-    db.session.add(feedback)
+    entry = Feedbackpage(name= name, email=email, message=message,date_posted=datetime.now())
+    db.session.add(entry)
     db.session.commit()
     return render_template('feedback.html')
 
