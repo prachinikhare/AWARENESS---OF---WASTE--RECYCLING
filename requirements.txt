@@ -19,7 +19,7 @@ Jinja2==2.11.3
 Keras-Preprocessing==1.1.2
 Markdown==3.3.4
 MarkupSafe==1.1.1
-numpy==1.19.0 
+numpy==1.19.5 
 oauthlib==3.1.0
 opt-einsum==3.3.0
 Pillow==8.1.2
@@ -31,6 +31,7 @@ requests-oauthlib==1.3.0
 rsa==4.7.2
 six==1.15.0
 tensorboard==2.8.0
+tensorflow-cpu==2.8.0
 tensorboard-plugin-wit==1.8.1
 tensorflow-estimator==2.7.0
 termcolor==1.1.0
