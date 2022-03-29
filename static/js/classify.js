@@ -70,7 +70,7 @@ var imgData;
           var about = document.getElementById("about");
           var videotitle = document.getElementById("video-title");
 
-          about.innerHTML = "<center><h3>Waste classified as <b style='background-color: #0b2438;'>" + predicted_value + "</b> material</h3></center><h4>"+ details +"</h4>";
+          about.innerHTML = "<center><h3>Waste classified as <b style='background-color: #FF0000;'>" + predicted_value + "</b> material</h3></center><h4>"+ details +"</h4>";
           videotitle.innerHTML = "How "+ predicted_value +" Recycling Works?";
 
           document.getElementById("video1").setAttribute("src", "https://www.youtube.com/embed/" + video1);
