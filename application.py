@@ -17,6 +17,7 @@ util.load_artifacts()
 def home():
     return render_template("index.html")
 
+#about page
 @application.route('/about')
 @application.route("/about.html")
 def About():
