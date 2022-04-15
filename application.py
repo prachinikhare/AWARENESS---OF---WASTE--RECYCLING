@@ -1,22 +1,10 @@
 from flask import Flask, request, render_template, redirect, jsonify, url_for
-from flask_sqlalchemy import SQLAlchemy
-import sqlalchemy
-from datetime import datetime
 from flask_jsglue import JSGlue # this is use for url_for() working inside javascript which is help us to navigate the url
 import util
 import os
 from werkzeug.utils import secure_filename
 
 application = Flask(__name__ , template_folder='templates',instance_relative_config=True, static_url_path = "/static", static_folder = "static")
-application.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///feedback.db"
-db = SQLAlchemy(application)
-
-class Feedbackpage(db.Model):
-    sno = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(120), nullable=False)
-    message = db.Column(db.String(500), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=True)
     
 # JSGlue is use for url_for() working inside javascript which is help us to navigate the url
 jsglue = JSGlue() # create a object of JsGlue
@@ -33,22 +21,6 @@ def home():
 @application.route("/about.html")
 def About():
     return render_template("about.html")
-
-@application.route('/')
-@application.route("/feedback.html")
-def feed():
-     return render_template("feedback.html")
-
-@application.route('/feedback', methods = ['GET', 'POST'])
-def feedback():
-  if(request.method=='POST'):
-    name = request.form.get('name')
-    email = request.form.get('email')
-    message = request.form.get('message')
-    entry = Feedbackpage(name= name, email=email, message=message,date_posted=datetime.now())
-    db.session.add(entry)
-    db.session.commit()
-    return render_template('feedback.html')
 
 #classify waste
 @application.route('/')
