@@ -14,3 +14,8 @@ links of deployed model
 
 
 3) https://flask-we.herokuapp.com/classify.html
+
+
+
+https://user-images.githubusercontent.com/82951655/166940759-9228dc66-9511-4733-b57f-3a75f604db61.mp4
+
